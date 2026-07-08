@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,6 +16,11 @@ const Navbar = () => {
         { name: 'BMI Calculator', href: '#bmi-calculator' },
         { name: 'About', href: '#about' },
     ];
+
+    const pathname = usePathname();
+    if (pathname.includes('dashboard')) {
+        return null;
+    }
 
     return (
         <div className="sticky top-0 z-50 bg-[#E9EFEC]/90 px-4 py-5 backdrop-blur-md">
