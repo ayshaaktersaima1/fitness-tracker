@@ -1,119 +1,180 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
     House,
     ChartColumn,
     Calculator,
     Person,
     Bars,
-} from "@gravity-ui/icons";
-import { Button, Drawer } from "@heroui/react";
-import { IoLeafSharp } from "react-icons/io5";
-import { LuDumbbell } from "react-icons/lu";
+} from '@gravity-ui/icons';
+import { Button, Drawer } from '@heroui/react';
+import { IoLeafSharp } from 'react-icons/io5';
+import { LuDumbbell } from 'react-icons/lu';
+import { MdLogout } from 'react-icons/md';
 
 export default function Sidebar() {
+    const pathname = usePathname();
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const navItems = [
         {
             icon: House,
             label: 'Overview',
-            href: '/dashboard',
+            href: '/dashboard/user',
         },
         {
             icon: LuDumbbell,
             label: 'Workout Plans',
-            href: '/dashboard/workout-plans',
+            href: '/dashboard/user/workout-plans',
         },
         {
             icon: ChartColumn,
             label: 'Progress Charts',
-            href: '/dashboard/progress-charts',
+            href: '/dashboard/user/progress-charts',
         },
         {
             icon: IoLeafSharp,
             label: 'Diet Plans',
-            href: '/dashboard/diet-plans',
+            href: '/dashboard/user/diet-plans',
         },
         {
             icon: Calculator,
             label: 'BMI Calculator',
-            href: '/dashboard/bmi-calculator',
+            href: '/dashboard/user/bmi-calculator',
         },
         {
             icon: Person,
             label: 'User Profile',
-            href: '/dashboard/user-profile',
+            href: '/dashboard/user/user-profile',
         },
     ];
 
     return (
         <>
             {/* Medium and large device sidebar */}
-            <aside className="hidden min-h-screen w-[260px] border-r border-[#C4DAD2] bg-white px-5 py-6 shadow-sm md:block">
-                <h2 className="mb-8 text-2xl font-bold text-[#16423C]">
-                    FitTrack
-                </h2>
+            <aside className="hidden h-screen w-[30%] min-w-60 max-w-70 shrink-0 flex-col bg-[#003F32] px-5 py-7 text-white md:flex">
+                <div>
+                    <Link href="/" className="mb-10 block">
+                        <Image
+                            src="/assets/whitelogo.png"
+                            alt="FitTrack Logo"
+                            width={180}
+                            height={70}
+                            className="h-[58px] w-auto object-contain"
+                        />
+                    </Link>
 
-                <nav className="flex flex-col gap-2">
-                    {navItems.map((item) => {
-                        const Icon = item.icon;
+                    <nav className="flex flex-col gap-4">
+                        {navItems.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = pathname === item.href;
 
-                        return (
-                            <Link
-                                key={item.label}
-                                href={item.href}
-                                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#16423C] transition hover:bg-[#C4DAD2]"
-                            >
-                                <Icon className="size-5" />
-                                {item.label}
-                            </Link>
-                        );
-                    })}
-                </nav>
+                            return (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    className={`flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium transition ${isActive
+                                            ? 'bg-[#6A9C89] text-white'
+                                            : 'text-white/90 hover:bg-white/10'
+                                        }`}
+                                >
+                                    <Icon className="size-5" />
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
+                    </nav>
+                </div>
+
+                <button
+                    type="button"
+                    className="mt-auto flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+                >
+                    <MdLogout className="size-5" />
+                    Logout
+                </button>
             </aside>
 
             {/* Small device drawer */}
-            <div className="md:hidden">
-                <Drawer>
-                    <Button className="m-4 bg-[#16423C] text-white">
-                        <Bars />
-                        Menu
-                    </Button>
+            {isMobile && (
+                <div className="md:hidden">
+                    <Drawer>
+                        <Button className="m-4 bg-[#003F32] text-white">
+                            <Bars />
+                            Menu
+                        </Button>
 
-                    <Drawer.Backdrop>
-                        <Drawer.Content placement="left">
-                            <Drawer.Dialog>
-                                <Drawer.CloseTrigger />
+                        <Drawer.Backdrop>
+                            <Drawer.Content placement="left">
+                                <Drawer.Dialog className="min-h-screen bg-[#003F32] text-white">
+                                    <Drawer.CloseTrigger />
 
-                                <Drawer.Header>
-                                    <Drawer.Heading className="text-xl font-bold text-[#16423C]">
-                                        Navigation
-                                    </Drawer.Heading>
-                                </Drawer.Header>
+                                    <Drawer.Header>
+                                        <Drawer.Heading>
+                                            <Image
+                                                src="/assets/whitelogo.png"
+                                                alt="FitTrack Logo"
+                                                width={170}
+                                                height={65}
+                                                className="h-[55px] w-auto object-contain"
+                                            />
+                                        </Drawer.Heading>
+                                    </Drawer.Header>
 
-                                <Drawer.Body>
-                                    <nav className="flex flex-col gap-2">
-                                        {navItems.map((item) => {
-                                            const Icon = item.icon;
+                                    <Drawer.Body className="flex min-h-[85vh] flex-col">
+                                        <nav className="flex flex-col gap-4">
+                                            {navItems.map((item) => {
+                                                const Icon = item.icon;
+                                                const isActive = pathname === item.href;
 
-                                            return (
-                                                <Link
-                                                    key={item.label}
-                                                    href={item.href}
-                                                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#16423C] transition hover:bg-[#C4DAD2]"
-                                                >
-                                                    <Icon className="size-5" />
-                                                    {item.label}
-                                                </Link>
-                                            );
-                                        })}
-                                    </nav>
-                                </Drawer.Body>
-                            </Drawer.Dialog>
-                        </Drawer.Content>
-                    </Drawer.Backdrop>
-                </Drawer>
-            </div>
+                                                return (
+                                                    <Link
+                                                        key={item.label}
+                                                        href={item.href}
+                                                        className={`flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium transition ${isActive
+                                                                ? 'bg-[#6A9C89] text-white'
+                                                                : 'text-white/90 hover:bg-white/10'
+                                                            }`}
+                                                    >
+                                                        <Icon className="size-5" />
+                                                        {item.label}
+                                                    </Link>
+                                                );
+                                            })}
+                                        </nav>
+
+                                        <button
+                                            type="button"
+                                            className="mt-auto flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+                                        >
+                                            <MdLogout className="size-5" />
+                                            Logout
+                                        </button>
+                                    </Drawer.Body>
+                                </Drawer.Dialog>
+                            </Drawer.Content>
+                        </Drawer.Backdrop>
+                    </Drawer>
+                </div>
+            )}
         </>
     );
 }
