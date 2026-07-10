@@ -3,37 +3,58 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import { MdDashboard } from 'react-icons/md';
+import { authClient } from '@/lib/auth-client';
+
+const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Features', href: '/#features' },
+    { name: 'How It Works', href: '/#how-it-works' },
+];
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeLink, setActiveLink] = useState('Home');
 
-    const navLinks = [
-        { name: 'Home', href: '/' },
-        { name: 'Features', href: '#features' },
-        { name: 'How It Works', href: '#how-it-works' },
-        { name: 'BMI Calculator', href: '#bmi-calculator' },
-        { name: 'About', href: '#about' },
-    ];
-
     const pathname = usePathname();
+    const router = useRouter();
+
+    const { data: session } = authClient.useSession();
+
+    const user = session?.user;
+    const firstName = user?.name ? user.name.split(' ')[0] : 'User';
+
     if (pathname.includes('dashboard')) {
         return null;
     }
 
-    return (
-        <div className="sticky top-0 z-50 bg-[#E9EFEC]/90 px-4 py-5 backdrop-blur-md">
-            <nav className="mx-auto flex h-[82px] max-w-[1500px] items-center justify-between rounded-[18px] bg-white px-6 shadow-[0_18px_60px_rgba(22,66,60,0.12)] lg:px-10">
+    const handleLogout = async () => {
+        await authClient.signOut();
 
+        setIsMenuOpen(false);
+        router.push('/login');
+        router.refresh();
+    };
+
+    return (
+        <nav className="sticky top-0 z-50 w-full border-b border-[#C4DAD2] bg-white/95 backdrop-blur-md">
+            <header className="mx-auto flex w-full items-center justify-between px-5 py-4 md:w-[85%] md:px-0">
                 {/* Logo */}
-                <Link href="/" onClick={() => setActiveLink('Home')}>
+                <Link
+                    href="/"
+                    onClick={() => {
+                        setActiveLink('Home');
+                        setIsMenuOpen(false);
+                    }}
+                >
                     <Image
                         src="/assets/fitTrackLogo.png"
                         alt="FitTrack Logo"
                         width={220}
                         height={80}
-                        className="h-[48px] w-auto object-contain md:h-[56px]"
+                        className="h-12 w-auto object-contain md:h-14"
                         priority
                     />
                 </Link>
@@ -45,9 +66,9 @@ const Navbar = () => {
                             <Link
                                 href={link.href}
                                 onClick={() => setActiveLink(link.name)}
-                                className={`pb-2 text-[17px] font-semibold transition hover:text-[#16423C] ${activeLink === link.name
-                                    ? 'border-b-2 border-[#16423C] text-[#16423C]'
-                                    : 'border-b-2 border-transparent text-[#1F2937]'
+                                className={`pb-2 text-base font-semibold transition hover:text-[#16423C] ${activeLink === link.name
+                                        ? 'border-b-2 border-[#16423C] text-[#16423C]'
+                                        : 'border-b-2 border-transparent text-[#1F2937]'
                                     }`}
                             >
                                 {link.name}
@@ -56,70 +77,172 @@ const Navbar = () => {
                     ))}
                 </ul>
 
-                {/* Desktop Buttons */}
-                <div className="hidden items-center gap-5 lg:flex">
-                    <Link href="/login">
-                        <button className="h-[52px] rounded-full border border-[#16423C] bg-white px-9 text-[16px] font-semibold text-[#16423C] transition hover:bg-[#E9EFEC]">
-                            Login
-                        </button>
-                    </Link>
+                {/* Desktop Right */}
+                <div className="hidden items-center gap-4 lg:flex">
+                    {user ? (
+                        <>
+                            <div className="flex items-center gap-2 rounded-full border border-[#C4DAD2] bg-white px-3 py-2">
+                                {user.image ? (
+                                    <Image
+                                        src={user.image}
+                                        alt={user.name || 'User'}
+                                        width={32}
+                                        height={32}
+                                        className="h-8 w-8 rounded-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#16423C] text-xs font-bold uppercase text-white">
+                                        {firstName[0]}
+                                    </div>
+                                )}
 
-                    <Link href="/register">
-                        <button className="h-[52px] rounded-full bg-[#16423C] px-9 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(22,66,60,0.25)] transition hover:bg-[#0f302b]">
-                            Register
-                        </button>
-                    </Link>
+                                <span className="text-sm font-semibold text-[#16423C]">
+                                    {firstName}
+                                </span>
+                            </div>
+
+                            <Link
+                                href="/dashboard/user"
+                                className="flex h-11 items-center justify-center gap-2 rounded-2xl bg-[#16423C] px-6 text-sm font-semibold text-white transition hover:bg-[#0f302b]"
+                            >
+                                <MdDashboard className="text-base" />
+                                Dashboard
+                            </Link>
+
+                            <button
+                                type="button"
+                                onClick={handleLogout}
+                                className="h-11 rounded-2xl border border-[#16423C] bg-white px-6 text-sm font-semibold text-[#16423C] transition hover:bg-[#E9EFEC]"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href="/login"
+                                className="flex h-11 items-center justify-center rounded-2xl border border-[#16423C] bg-white px-6 text-sm font-semibold text-[#16423C] transition hover:bg-[#E9EFEC]"
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                href="/register"
+                                className="flex h-11 items-center justify-center rounded-2xl bg-[#16423C] px-6 text-sm font-semibold text-white transition hover:bg-[#0f302b]"
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C4DAD2] text-[#16423C] lg:hidden"
-                    aria-label="Toggle Menu"
-                >
-                    {isMenuOpen ? '✕' : '☰'}
-                </button>
-            </nav>
+                {/* Mobile Right */}
+                <div className="flex items-center gap-3 lg:hidden">
+                    {user && (
+                        <div className="flex items-center gap-2 rounded-full border border-[#C4DAD2] bg-white px-2 py-2">
+                            {user.image ? (
+                                <Image
+                                    src={user.image}
+                                    alt={user.name || 'User'}
+                                    width={34}
+                                    height={34}
+                                    className="h-8 w-8 rounded-full object-cover"
+                                />
+                            ) : (
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#16423C] text-xs font-bold uppercase text-white">
+                                    {firstName[0]}
+                                </div>
+                            )}
+
+                            <span className="hidden max-w-20 truncate text-sm font-bold text-[#16423C] sm:block">
+                                {firstName}
+                            </span>
+                        </div>
+                    )}
+
+                    <button
+                        type="button"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#C4DAD2] text-[#16423C]"
+                        aria-label="Toggle Menu"
+                    >
+                        {isMenuOpen ? (
+                            <HiX className="text-2xl" />
+                        ) : (
+                            <HiMenuAlt3 className="text-2xl" />
+                        )}
+                    </button>
+                </div>
+            </header>
 
             {/* Mobile Dropdown */}
             {isMenuOpen && (
-                <div className="mx-auto mt-3 max-w-[1500px] rounded-[18px] bg-white p-5 shadow-[0_18px_60px_rgba(22,66,60,0.12)] lg:hidden">
-                    <ul className="space-y-2">
-                        {navLinks.map((link) => (
-                            <li key={link.name}>
-                                <Link
-                                    href={link.href}
-                                    onClick={() => {
-                                        setActiveLink(link.name);
-                                        setIsMenuOpen(false);
-                                    }}
-                                    className={`block rounded-xl px-4 py-3 text-[16px] font-semibold transition ${activeLink === link.name
-                                        ? 'bg-[#E9EFEC] text-[#16423C]'
-                                        : 'text-[#1F2937] hover:bg-[#E9EFEC]'
-                                        }`}
-                                >
-                                    {link.name}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                <div className="border-t border-[#C4DAD2] bg-white shadow-md lg:hidden">
+                    <div className="mx-auto w-full px-5 py-5 md:w-[87%] md:px-0">
+                        <ul className="space-y-2">
+                            {navLinks.map((link) => (
+                                <li key={link.name}>
+                                    <Link
+                                        href={link.href}
+                                        onClick={() => {
+                                            setActiveLink(link.name);
+                                            setIsMenuOpen(false);
+                                        }}
+                                        className={`block rounded-2xl px-4 py-3 text-base font-semibold transition ${activeLink === link.name
+                                                ? 'bg-[#E9EFEC] text-[#16423C]'
+                                                : 'text-[#1F2937] hover:bg-[#E9EFEC]'
+                                            }`}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
 
-                    <div className="mt-5 flex flex-col gap-3">
-                        <Link href="/login">
-                            <button className="h-12 w-full rounded-full border border-[#16423C] bg-white font-semibold text-[#16423C]">
-                                Login
-                            </button>
-                        </Link>
+                        <div className="mt-5 border-t border-[#C4DAD2] pt-5">
+                            {user ? (
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                    <Link
+                                        href="/dashboard/user"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#16423C] font-semibold text-white"
+                                    >
+                                        <MdDashboard className="text-lg" />
+                                        Dashboard
+                                    </Link>
 
-                        <Link href="/register">
-                            <button className="h-12 w-full rounded-full bg-[#16423C] font-semibold text-white">
-                                Get Started →
-                            </button>
-                        </Link>
+                                    <button
+                                        type="button"
+                                        onClick={handleLogout}
+                                        className="h-12 rounded-2xl border border-[#16423C] bg-white font-semibold text-[#16423C]"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-2 gap-3">
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="flex h-12 items-center justify-center rounded-2xl border border-[#16423C] bg-white font-semibold text-[#16423C]"
+                                    >
+                                        Login
+                                    </Link>
+
+                                    <Link
+                                        href="/register"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="flex h-12 items-center justify-center rounded-2xl bg-[#16423C] font-semibold text-white"
+                                    >
+                                        Register
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
-        </div>
+        </nav>
     );
 };
 

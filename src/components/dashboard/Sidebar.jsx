@@ -92,8 +92,8 @@ export default function Sidebar() {
                                     key={item.label}
                                     href={item.href}
                                     className={`flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium transition ${isActive
-                                            ? 'bg-[#6A9C89] text-white'
-                                            : 'text-white/90 hover:bg-white/10'
+                                        ? 'bg-[#6A9C89] text-white'
+                                        : 'text-white/90 hover:bg-white/10'
                                         }`}
                                 >
                                     <Icon className="size-5" />
@@ -129,13 +129,15 @@ export default function Sidebar() {
 
                                     <Drawer.Header>
                                         <Drawer.Heading>
-                                            <Image
-                                                src="/assets/whitelogo.png"
-                                                alt="FitTrack Logo"
-                                                width={170}
-                                                height={65}
-                                                className="h-[55px] w-auto object-contain"
-                                            />
+                                            <Link href="/" className="block w-fit">
+                                                <Image
+                                                    src="/assets/whitelogo.png"
+                                                    alt="FitTrack Logo"
+                                                    width={170}
+                                                    height={65}
+                                                    className="h-[55px] w-auto object-contain"
+                                                />
+                                            </Link>
                                         </Drawer.Heading>
                                     </Drawer.Header>
 
@@ -150,8 +152,8 @@ export default function Sidebar() {
                                                         key={item.label}
                                                         href={item.href}
                                                         className={`flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium transition ${isActive
-                                                                ? 'bg-[#6A9C89] text-white'
-                                                                : 'text-white/90 hover:bg-white/10'
+                                                            ? 'bg-[#6A9C89] text-white'
+                                                            : 'text-white/90 hover:bg-white/10'
                                                             }`}
                                                     >
                                                         <Icon className="size-5" />

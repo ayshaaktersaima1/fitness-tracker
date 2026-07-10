@@ -25,7 +25,7 @@ const HowItWorks = () => {
 
     return (
         <section id="how-it-works" className="bg-[#E9EFEC] py-16">
-            <div className="mx-auto w-[90%]">
+            <div className="mx-auto w-[85%]">
                 <div className="rounded-[32px] bg-white/60 px-6 py-12 shadow-sm md:px-10 lg:px-16">
 
                     {/* Section Heading */}

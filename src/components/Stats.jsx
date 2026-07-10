@@ -31,14 +31,14 @@ const Stats = () => {
 
     return (
         <section className="bg-[#E9EFEC] pb-14">
-            <div className="mx-auto w-[90%]">
+            <div className="mx-auto w-full px-5 pt-12 md:w-[87%] md:px-0 md:pt-16">
                 <div className="grid grid-cols-1 overflow-hidden rounded-3xl border border-[#C4DAD2] bg-white shadow-lg sm:grid-cols-2 lg:grid-cols-4">
                     {statsData.map((stat, index) => (
                         <div
                             key={stat.id}
                             className={`flex flex-col items-center justify-center px-6 py-8 text-center ${index !== statsData.length - 1
-                                    ? 'lg:border-r lg:border-[#E9EFEC]'
-                                    : ''
+                                ? 'lg:border-r lg:border-[#E9EFEC]'
+                                : ''
                                 } ${index < statsData.length - 2
                                     ? 'sm:border-b sm:border-[#E9EFEC] lg:border-b-0'
                                     : ''

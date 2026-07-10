@@ -5,16 +5,30 @@ import Features from './Features';
 import HowItWorks from './HowItWorks';
 import CTASection from './CTASection';
 import Footer from './Footer';
+import GsapFadeUp from './GsapFadeUp';
 
 const Homepage = () => {
     return (
         <div>
-            <Banner></Banner>
-            <Stats></Stats>
-            <Features></Features>
-            <HowItWorks></HowItWorks>
-            <CTASection></CTASection>
-            <Footer></Footer>
+            <GsapFadeUp>
+                <Banner></Banner>
+            </GsapFadeUp>
+            <GsapFadeUp>
+                <Stats></Stats>
+            </GsapFadeUp>
+            <GsapFadeUp>
+                <Features></Features>
+            </GsapFadeUp>
+            <GsapFadeUp>
+                <HowItWorks></HowItWorks>
+            </GsapFadeUp>
+            <GsapFadeUp>
+                <CTASection></CTASection>
+            </GsapFadeUp>
+            <GsapFadeUp>
+                <Footer></Footer>
+            </GsapFadeUp>
+
         </div>
     );
 };
