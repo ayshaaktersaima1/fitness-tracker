@@ -26,9 +26,14 @@ const Navbar = () => {
     const user = session?.user;
     const firstName = user?.name ? user.name.split(' ')[0] : 'User';
 
-    if (pathname.includes('dashboard')) {
+    if (pathname.startsWith('/dashboard')) {
         return null;
     }
+
+    const isActive = (link) => {
+        if (pathname !== '/') return false;
+        return activeLink === link.name;
+    };
 
     const handleLogout = async () => {
         await authClient.signOut();
@@ -41,7 +46,6 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-[#C4DAD2] bg-white/95 backdrop-blur-md">
             <header className="mx-auto flex w-full items-center justify-between px-5 py-4 md:w-[85%] md:px-0">
-                {/* Logo */}
                 <Link
                     href="/"
                     onClick={() => {
@@ -59,14 +63,13 @@ const Navbar = () => {
                     />
                 </Link>
 
-                {/* Desktop Menu */}
                 <ul className="hidden items-center gap-10 lg:flex">
                     {navLinks.map((link) => (
                         <li key={link.name}>
                             <Link
                                 href={link.href}
                                 onClick={() => setActiveLink(link.name)}
-                                className={`pb-2 text-base font-semibold transition hover:text-[#16423C] ${activeLink === link.name
+                                className={`pb-2 text-base font-semibold transition hover:text-[#16423C] ${isActive(link)
                                         ? 'border-b-2 border-[#16423C] text-[#16423C]'
                                         : 'border-b-2 border-transparent text-[#1F2937]'
                                     }`}
@@ -77,7 +80,6 @@ const Navbar = () => {
                     ))}
                 </ul>
 
-                {/* Desktop Right */}
                 <div className="hidden items-center gap-4 lg:flex">
                     {user ? (
                         <>
@@ -136,7 +138,6 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {/* Mobile Right */}
                 <div className="flex items-center gap-3 lg:hidden">
                     {user && (
                         <div className="flex items-center gap-2 rounded-full border border-[#C4DAD2] bg-white px-2 py-2">
@@ -175,10 +176,9 @@ const Navbar = () => {
                 </div>
             </header>
 
-            {/* Mobile Dropdown */}
             {isMenuOpen && (
                 <div className="border-t border-[#C4DAD2] bg-white shadow-md lg:hidden">
-                    <div className="mx-auto w-full px-5 py-5 md:w-[87%] md:px-0">
+                    <div className="mx-auto w-full px-5 py-5 md:w-[85%] md:px-0">
                         <ul className="space-y-2">
                             {navLinks.map((link) => (
                                 <li key={link.name}>
@@ -188,7 +188,7 @@ const Navbar = () => {
                                             setActiveLink(link.name);
                                             setIsMenuOpen(false);
                                         }}
-                                        className={`block rounded-2xl px-4 py-3 text-base font-semibold transition ${activeLink === link.name
+                                        className={`block rounded-2xl px-4 py-3 text-base font-semibold transition ${isActive(link)
                                                 ? 'bg-[#E9EFEC] text-[#16423C]'
                                                 : 'text-[#1F2937] hover:bg-[#E9EFEC]'
                                             }`}

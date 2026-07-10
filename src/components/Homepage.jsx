@@ -25,9 +25,7 @@ const Homepage = () => {
             <GsapFadeUp>
                 <CTASection></CTASection>
             </GsapFadeUp>
-            <GsapFadeUp>
-                <Footer></Footer>
-            </GsapFadeUp>
+
 
         </div>
     );
