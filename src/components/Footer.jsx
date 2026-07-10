@@ -1,5 +1,7 @@
+'use client'
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import {
     FaFacebookF,
@@ -11,6 +13,12 @@ import {
 } from 'react-icons/fa';
 
 const Footer = () => {
+
+    const pathname = usePathname();
+
+    if (pathname.includes('dashboard')) {
+        return null;
+    }
     return (
         <footer className="bg-[#E9EFEC] pt-12">
             <div className="mx-auto w-[85%]">

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
     House,
     ChartColumn,
@@ -15,10 +15,13 @@ import { Button, Drawer } from '@heroui/react';
 import { IoLeafSharp } from 'react-icons/io5';
 import { LuDumbbell } from 'react-icons/lu';
 import { MdLogout } from 'react-icons/md';
+import { authClient } from '@/lib/auth-client';
+
 
 export default function Sidebar() {
     const pathname = usePathname();
     const [isMobile, setIsMobile] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const handleResize = () => {
@@ -33,6 +36,15 @@ export default function Sidebar() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+
+
+    const handleLogout = async () => {
+        await authClient.signOut();
+
+        router.push('/login');
+        router.refresh();
+    };
 
     const navItems = [
         {
@@ -104,7 +116,7 @@ export default function Sidebar() {
                     </nav>
                 </div>
 
-                <button
+                <button onClick={handleLogout}
                     type="button"
                     className="mt-auto flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
                 >
@@ -164,6 +176,7 @@ export default function Sidebar() {
                                         </nav>
 
                                         <button
+                                            onClick={handleLogout}
                                             type="button"
                                             className="mt-auto flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
                                         >
