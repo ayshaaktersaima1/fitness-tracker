@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FitTrack - Fitness Tracking Dashboard
 
-## Getting Started
+FitTrack is a modern fitness tracking dashboard built to help users manage their fitness journey through workout plans, diet plans, progress tracking, BMI calculation, and personal profile information.
 
-First, run the development server:
+The project includes a responsive homepage, user authentication, and a personalized dashboard where users can view fitness-related data based on their registered information.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live Link
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+https://fitness-tracker-beryl-two.vercel.app/
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js
+- React.js
+- Tailwind CSS
+- HeroUI
+- Better Auth
+- MongoDB
+- Recharts
+- React Icons
+- React Toastify
+- GSAP
+- Lenis
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- Responsive homepage with navbar, banner, features section, how-it-works section, call-to-action section and footer
+- Dynamic navbar based on user login status
+- User registration with name, email, password, age, height, weight, fitness goal and activity level
+- Login system using email and password
+- Authentication implemented with Better Auth
+- Protected dashboard routes
+- Responsive dashboard sidebar with mobile drawer
+- Overview page showing BMI score, fitness goal, activity level, current weight, and recommended actions
+- Workout plans page with recommended workout plan and all available workout plans
+- Diet plans page with recommended diet plan and all available diet plans
+- Progress charts page with workout, calories, steps, water intake, weight, BMI and workout type breakdown charts
+- BMI calculator page with current BMI, height, weight and BMI calculation form
+- User profile page showing personal and fitness information
+- Logout functionality
+- Custom 404 not found page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dashboard Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Overview
+- Workout Plans
+- Progress Charts
+- Diet Plans
+- BMI Calculator
+- User Profile
 
-## Deploy on Vercel
+## Project Purpose
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The purpose of this project is to create a complete and responsive fitness tracking dashboard where users can register, log in, view their personal fitness information, track progress visually, calculate BMI and access workout and diet recommendations.
