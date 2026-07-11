@@ -14,7 +14,7 @@ const Banner = () => {
 
     return (
         <section id="home">
-            <div className="lg:h-[88vh] mx-auto grid w-[85%] grid-cols-1 items-center gap-8 py-10 md:py-14 lg:grid-cols-[46%_54%] lg:gap-6 lg:py-0">
+            <div className="lg:h-[88vh] mx-auto grid w-[85%] grid-cols-1 items-center gap-2 py-10 md:py-14 lg:grid-cols-[46%_54%] lg:gap-6 lg:py-0">
 
                 {/* Left Content */}
                 <div className="order-1 text-center lg:text-left">
