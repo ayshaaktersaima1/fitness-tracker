@@ -24,13 +24,13 @@ const HowItWorks = () => {
     ];
 
     return (
-        <section id="how-it-works" className="bg-[#E9EFEC] py-16">
+        <section id="how-it-works" className="py-16">
             <div className="mx-auto w-[85%]">
                 <div className="rounded-[32px] bg-white/60 px-6 py-12 shadow-sm md:px-10 lg:px-16">
 
                     {/* Section Heading */}
                     <div className="mb-12 text-center">
-                        <p className="mb-2 text-sm font-bold uppercase tracking-[0.18em] text-[#6A9C89]">
+                        <p className="mb-2 text-sm font-bold uppercase  text-[#6A9C89]">
                             How It Works
                         </p>
 
@@ -46,7 +46,7 @@ const HowItWorks = () => {
 
                                 {/* Dashed Line */}
                                 {index !== steps.length - 1 && (
-                                    <div className="absolute left-[62%] top-[58px] hidden h-[1px] w-[75%] border-t border-dashed border-[#6A9C89]/60 md:block"></div>
+                                    <div className="absolute left-[62%] top-14.5 hidden h-px w-[75%] border-t border-dashed border-[#6A9C89]/60 md:block"></div>
                                 )}
 
                                 {/* Number Circle */}
@@ -64,7 +64,7 @@ const HowItWorks = () => {
                                     {step.title}
                                 </h3>
 
-                                <p className="mt-3 max-w-[260px] text-sm leading-6 text-[#263F3A]">
+                                <p className="mt-3 max-w-65 text-sm leading-6 text-[#263F3A]">
                                     {step.description}
                                 </p>
                             </div>

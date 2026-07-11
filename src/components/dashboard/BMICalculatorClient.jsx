@@ -56,7 +56,7 @@ export default function BMICalculatorClient({ userData }) {
             </div>
 
             {/* Current BMI */}
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-3xl bg-[#003F32] p-6 text-white shadow-sm md:col-span-1">
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-3xl">
                         <MdHealthAndSafety />

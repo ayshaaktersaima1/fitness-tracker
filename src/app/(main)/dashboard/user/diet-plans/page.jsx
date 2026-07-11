@@ -174,7 +174,7 @@ export default async function DietPlansPage() {
             </div>
 
             {/* User Preference */}
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-2xl bg-white p-5 shadow-sm">
                     <p className="text-sm text-[#5F6F69]">Fitness Goal</p>
                     <h3 className="mt-2 text-xl font-bold text-[#16423C]">
@@ -294,7 +294,7 @@ export default async function DietPlansPage() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                     {otherPlans.map((plan) => (
                         <DietPlanCard key={plan.id} plan={plan} />
                     ))}

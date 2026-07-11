@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-    FaDumbbell,
-    FaChartLine,
-    FaUtensils,
-    FaCalculator,
-    FaBullseye,
-    FaUser,
-    FaLeaf,
+    FaDumbbell, FaChartLine, FaUtensils, FaCalculator, FaBullseye, FaUser, FaLeaf,
 } from 'react-icons/fa';
+import FeatureCard from './FeatureCard';
 
 const Features = () => {
     const features = [
@@ -50,7 +45,7 @@ const Features = () => {
     ];
 
     return (
-        <section id="features" className="bg-[#E9EFEC] py-16">
+        <div id="features" className="py-16">
             <div className="mx-auto w-[85%]">
                 {/* Section Heading */}
                 <div className="mb-12 text-center">
@@ -63,35 +58,20 @@ const Features = () => {
                     </h2>
 
                     <div className="mx-auto mt-4 flex items-center justify-center gap-3">
-                        <span className="h-[1px] w-16 bg-[#C4DAD2]"></span>
+                        <span className="h-px w-16 bg-[#C4DAD2]"></span>
                         <FaLeaf className="text-sm text-[#6A9C89]" />
-                        <span className="h-[1px] w-16 bg-[#C4DAD2]"></span>
+                        <span className="h-px w-16 bg-[#C4DAD2]"></span>
                     </div>
                 </div>
 
                 {/* Feature Cards */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2  lg:grid-cols-6">
                     {features.map((feature) => (
-                        <div
-                            key={feature.id}
-                            className="group rounded-2xl border border-[#C4DAD2] bg-white p-6 text-center shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-md"
-                        >
-                            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#E9EFEC] text-2xl text-[#16423C] transition duration-300 group-hover:bg-[#16423C] group-hover:text-white">
-                                {feature.icon}
-                            </div>
-
-                            <h3 className="mb-3 text-lg font-bold text-[#16423C]">
-                                {feature.title}
-                            </h3>
-
-                            <p className="text-sm leading-6 text-[#263F3A]">
-                                {feature.description}
-                            </p>
-                        </div>
+                        <FeatureCard key={feature.id} feature={feature} />
                     ))}
                 </div>
             </div>
-        </section>
+        </div>
     );
 };
 

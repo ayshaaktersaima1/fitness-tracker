@@ -1,26 +1,10 @@
 'use client';
 
 import {
-    BarChart, Bar,
-    LineChart,
-    Line,
-    PieChart,
-    Pie,
-    Cell,
-    XAxis,
-    YAxis,
-    Tooltip,
-    ResponsiveContainer,
-    CartesianGrid,
-    Legend,
+    BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend,
 } from 'recharts';
 import {
-    MdFitnessCenter,
-    MdLocalFireDepartment,
-    MdDirectionsWalk,
-    MdWaterDrop,
-    MdMonitorWeight,
-    MdCalculate,
+    MdFitnessCenter, MdLocalFireDepartment, MdDirectionsWalk, MdWaterDrop, MdMonitorWeight, MdCalculate,
 } from 'react-icons/md';
 
 export default function ProgressChartsPage() {
@@ -158,7 +142,7 @@ export default function ProgressChartsPage() {
                         </p>
                     </div>
 
-                    <div className="h-[320px]">
+                    <div className="h-80">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={weeklyData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -191,7 +175,7 @@ export default function ProgressChartsPage() {
                         </p>
                     </div>
 
-                    <div className="h-[320px]">
+                    <div className="h-80">
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={weeklyData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -223,7 +207,7 @@ export default function ProgressChartsPage() {
                         </p>
                     </div>
 
-                    <div className="h-[320px]">
+                    <div className="h-80">
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={bodyData}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -267,7 +251,7 @@ export default function ProgressChartsPage() {
                     </div>
 
                     <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-2">
-                        <div className="h-[280px]">
+                        <div className="h-70">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                     <Pie

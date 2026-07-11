@@ -1,30 +1,25 @@
-'use client'
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 import {
-    FaFacebookF,
-    FaInstagram,
-    FaGithub,
-    FaEnvelope,
-    FaPhoneAlt,
-    FaMapMarkerAlt,
+    FaFacebookF, FaInstagram, FaGithub, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt,
 } from 'react-icons/fa';
 
 const Footer = () => {
-
     const pathname = usePathname();
 
-    if (pathname.includes('dashboard')) {
+    if (pathname.startsWith('/dashboard')) {
         return null;
     }
+
     return (
         <footer className="bg-[#E9EFEC] pt-12">
-            <div className="mx-auto w-[85%]">
-                <div className="grid grid-cols-1 gap-10 border-t border-[#C4DAD2] py-10 md:grid-cols-2 lg:grid-cols-3">
+            <div className="w-full border-t border-[#C4DAD2]" />
 
-                    {/* Logo + Description */}
+            <div className="mx-auto w-[85%]">
+                <div className="grid grid-cols-1 gap-10 py-10 md:grid-cols-2 lg:grid-cols-3">
                     <div>
                         <Link href="/">
                             <Image
@@ -32,7 +27,7 @@ const Footer = () => {
                                 alt="FitTrack Logo"
                                 width={180}
                                 height={70}
-                                className="h-[52px] w-auto object-contain"
+                                className="h-12 w-auto object-contain"
                             />
                         </Link>
 
@@ -42,7 +37,6 @@ const Footer = () => {
                             daily progress.
                         </p>
 
-                        {/* Social Icons */}
                         <div className="mt-6 flex items-center gap-3">
                             <Link
                                 href="#"
@@ -67,7 +61,6 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Quick Links */}
                     <div>
                         <h3 className="text-xl font-bold text-[#16423C]">
                             Quick Links
@@ -75,39 +68,43 @@ const Footer = () => {
 
                         <ul className="mt-5 space-y-3">
                             <li>
-                                <Link href="/" className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]">
+                                <Link
+                                    href="/"
+                                    className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]"
+                                >
                                     Home
                                 </Link>
                             </li>
+
                             <li>
-                                <Link href="#features" className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]">
+                                <Link
+                                    href="/#features"
+                                    className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]"
+                                >
                                     Features
                                 </Link>
                             </li>
+
                             <li>
-                                <Link href="#how-it-works" className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]">
+                                <Link
+                                    href="/#how-it-works"
+                                    className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]"
+                                >
                                     How It Works
                                 </Link>
                             </li>
+
                             <li>
-                                <Link href="#bmi-calculator" className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]">
-                                    BMI Calculator
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#about" className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]">
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/login" className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]">
+                                <Link
+                                    href="/login"
+                                    className="text-sm font-medium text-[#263F3A] transition hover:text-[#16423C]"
+                                >
                                     Login
                                 </Link>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Contact Us */}
                     <div>
                         <h3 className="text-xl font-bold text-[#16423C]">
                             Contact Us
@@ -118,6 +115,7 @@ const Footer = () => {
                                 <span className="mt-1 text-[#6A9C89]">
                                     <FaEnvelope />
                                 </span>
+
                                 <div>
                                     <p className="text-sm font-semibold text-[#16423C]">
                                         Email
@@ -132,6 +130,7 @@ const Footer = () => {
                                 <span className="mt-1 text-[#6A9C89]">
                                     <FaPhoneAlt />
                                 </span>
+
                                 <div>
                                     <p className="text-sm font-semibold text-[#16423C]">
                                         Phone
@@ -146,6 +145,7 @@ const Footer = () => {
                                 <span className="mt-1 text-[#6A9C89]">
                                     <FaMapMarkerAlt />
                                 </span>
+
                                 <div>
                                     <p className="text-sm font-semibold text-[#16423C]">
                                         Location
@@ -159,7 +159,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Bottom Footer */}
                 <div className="border-t border-[#C4DAD2] py-5 text-center">
                     <p className="text-sm font-medium text-[#263F3A]">
                         © 2026 FitTrack. All rights reserved.

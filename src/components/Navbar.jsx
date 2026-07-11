@@ -44,13 +44,13 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 w-full border-b border-[#C4DAD2] bg-white/95 backdrop-blur-md">
-            <header className="mx-auto flex w-full items-center justify-between px-5 py-4 md:w-[85%] md:px-0">
+        <nav className="sticky top-0 z-50 md:w-[85%] mx-auto rounded-2xl md:mt-4 border-b border-[#C4DAD2] bg-white/75 backdrop-blur-md">
+            <div className="mx-auto flex w-full items-center justify-between px-5 py-4 md:w-[95%] md:px-0">
                 <Link
                     href="/"
                     onClick={() => {
                         setActiveLink('Home');
-                        setIsMenuOpen(false);
+
                     }}
                 >
                     <Image
@@ -70,8 +70,8 @@ const Navbar = () => {
                                 href={link.href}
                                 onClick={() => setActiveLink(link.name)}
                                 className={`pb-2 text-base font-semibold transition hover:text-[#16423C] ${isActive(link)
-                                        ? 'border-b-2 border-[#16423C] text-[#16423C]'
-                                        : 'border-b-2 border-transparent text-[#1F2937]'
+                                    ? 'border-b-2 border-[#16423C] text-[#16423C]'
+                                    : 'border-b-2 border-transparent text-[#1F2937]'
                                     }`}
                             >
                                 {link.name}
@@ -174,7 +174,7 @@ const Navbar = () => {
                         )}
                     </button>
                 </div>
-            </header>
+            </div>
 
             {isMenuOpen && (
                 <div className="border-t border-[#C4DAD2] bg-white shadow-md lg:hidden">
@@ -189,8 +189,8 @@ const Navbar = () => {
                                             setIsMenuOpen(false);
                                         }}
                                         className={`block rounded-2xl px-4 py-3 text-base font-semibold transition ${isActive(link)
-                                                ? 'bg-[#E9EFEC] text-[#16423C]'
-                                                : 'text-[#1F2937] hover:bg-[#E9EFEC]'
+                                            ? 'bg-[#E9EFEC] text-[#16423C]'
+                                            : 'text-[#1F2937] hover:bg-[#E9EFEC]'
                                             }`}
                                     >
                                         {link.name}

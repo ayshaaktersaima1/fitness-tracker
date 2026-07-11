@@ -1,34 +1,51 @@
 import Link from 'next/link';
 import {
-    MdCalculate, MdTrackChanges, MdDirectionsRun, MdMonitorWeight,
-    MdArrowForward, MdCheckCircle
+    MdCalculate,
+    MdTrackChanges,
+    MdDirectionsRun,
+    MdMonitorWeight,
+    MdArrowForward,
+    MdCheckCircle,
 } from 'react-icons/md';
 import { IoLeafSharp } from 'react-icons/io5';
 import { LuDumbbell } from 'react-icons/lu';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
-export default async function UserDashboardOverview() {
+const goalLabels = {
+    'lose-weight': 'Lose Weight',
+    'build-muscle': 'Build Muscle',
+    'stay-fit': 'Stay Fit',
+};
 
+const activityLabels = {
+    beginner: 'Beginner',
+    moderate: 'Moderate',
+    active: 'Active',
+};
+
+export default async function UserDashboardOverview() {
     const session = await auth.api.getSession({
-        headers: await headers()
-    })
+        headers: await headers(),
+    });
+
     const userData = session?.user;
+    const bmi = Number(userData?.bmi);
 
     const user = {
-        name: userData?.name,
-        bmi: userData?.bmi,
+        name: userData?.name || 'User',
+        bmi: userData?.bmi || 'Not Set',
         bmiStatus:
-            Number(userData?.bmi) < 18.5
+            bmi < 18.5
                 ? 'Underweight'
-                : Number(userData?.bmi) < 25
+                : bmi < 25
                     ? 'Healthy'
-                    : Number(userData?.bmi) < 30
+                    : bmi < 30
                         ? 'Overweight'
                         : 'Obese',
-        fitnessGoal: userData?.fitnessGoal,
-        activityLevel: userData?.activityLevel,
-        currentWeight: userData?.weight,
+        fitnessGoal: goalLabels[userData?.fitnessGoal] || 'Not Set',
+        activityLevel: activityLabels[userData?.activityLevel] || 'Not Set',
+        currentWeight: userData?.weight ? `${userData.weight} kg` : 'Not Set',
     };
 
     const summaryCards = [
@@ -53,29 +70,24 @@ export default async function UserDashboardOverview() {
         {
             icon: MdMonitorWeight,
             title: 'Current Weight',
-            value: `${user.currentWeight} kg`,
+            value: user.currentWeight,
             subText: 'Keep it up!',
         },
     ];
 
     return (
         <div className="space-y-7">
-            {/* Header */}
-            <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-wide text-[#16423C] md:text-4xl">
-                        Welcome back, {user.name}!
-                    </h1>
-                    <p className="mt-2 text-sm text-[#5F6F69]">
-                        Here’s your health summary.
-                    </p>
-                </div>
+            <div>
+                <h1 className="text-3xl font-bold tracking-wide text-[#16423C] md:text-4xl">
+                    Welcome back, {user.name}!
+                </h1>
 
-
+                <p className="mt-2 text-sm text-[#5F6F69]">
+                    Here’s your health summary.
+                </p>
             </div>
 
-            {/* Summary Cards */}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
                 {summaryCards.map((card) => {
                     const Icon = card.icon;
 
@@ -84,7 +96,7 @@ export default async function UserDashboardOverview() {
                             key={card.title}
                             className="rounded-2xl border border-[#DDE7E2] bg-white p-6 shadow-sm"
                         >
-                            <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-full bg-[#E9EFEC] text-2xl text-[#003F32]">
+                            <div className="mb-7 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#E9EFEC] text-2xl text-[#003F32]">
                                 <Icon />
                             </div>
 
@@ -97,7 +109,7 @@ export default async function UserDashboardOverview() {
                             </h2>
 
                             <p className="mt-3 flex items-center gap-2 text-sm text-[#3A8C5E]">
-                                <span className="h-2 w-2 rounded-full bg-[#3A8C5E]"></span>
+                                <span className="h-2 w-2 shrink-0 rounded-full bg-[#3A8C5E]" />
                                 {card.subText}
                             </p>
                         </div>
@@ -105,12 +117,10 @@ export default async function UserDashboardOverview() {
                 })}
             </div>
 
-            {/* Middle Section */}
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {/* Recommended */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <div className="rounded-2xl border border-[#DDE7E2] bg-white p-6 shadow-sm">
-                    <div className="mb-5 flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E9EFEC] text-xl text-[#003F32]">
+                    <div className="mb-5 flex items-center gap-4 ">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E9EFEC] text-xl text-[#003F32]">
                             <MdCheckCircle />
                         </div>
 
@@ -127,32 +137,33 @@ export default async function UserDashboardOverview() {
                     <div className="space-y-3">
                         <Link
                             href="/dashboard/user/workout-plans"
-                            className="flex items-center justify-between rounded-xl bg-[#003F32] px-5 py-4 text-sm font-semibold text-white transition hover:bg-[#0b4f41]"
+                            className="flex items-center justify-between gap-4 rounded-xl bg-[#003F32] px-5 py-4 text-sm font-semibold text-white transition hover:bg-[#0b4f41]"
                         >
                             <span className="flex items-center gap-3">
-                                <LuDumbbell className="text-lg" />
+                                <LuDumbbell className="shrink-0 text-lg" />
                                 View Workout Plans
                             </span>
-                            <MdArrowForward className="text-xl" />
+
+                            <MdArrowForward className="shrink-0 text-xl" />
                         </Link>
 
                         <Link
                             href="/dashboard/user/diet-plans"
-                            className="flex items-center justify-between rounded-xl bg-[#E9EFEC] px-5 py-4 text-sm font-semibold text-[#16423C] transition hover:bg-[#C4DAD2]"
+                            className="flex items-center justify-between gap-4 rounded-xl bg-[#E9EFEC] px-5 py-4 text-sm font-semibold text-[#16423C] transition hover:bg-[#C4DAD2]"
                         >
                             <span className="flex items-center gap-3">
-                                <IoLeafSharp className="text-lg" />
+                                <IoLeafSharp className="shrink-0 text-lg" />
                                 View Diet Plans
                             </span>
-                            <MdArrowForward className="text-xl" />
+
+                            <MdArrowForward className="shrink-0 text-xl" />
                         </Link>
                     </div>
                 </div>
 
-                {/* Quick Actions */}
                 <div className="rounded-2xl border border-[#DDE7E2] bg-white p-6 shadow-sm">
                     <div className="mb-5 flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E9EFEC] text-xl text-[#003F32]">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E9EFEC] text-xl text-[#003F32]">
                             <MdCalculate />
                         </div>
 
@@ -164,30 +175,30 @@ export default async function UserDashboardOverview() {
                     <div className="space-y-3">
                         <Link
                             href="/dashboard/user/bmi-calculator"
-                            className="flex items-center justify-between rounded-xl bg-[#E9EFEC] px-5 py-4 text-sm font-semibold text-[#16423C] transition hover:bg-[#C4DAD2]"
+                            className="flex items-center justify-between gap-4 rounded-xl bg-[#E9EFEC] px-5 py-4 text-sm font-semibold text-[#16423C] transition hover:bg-[#C4DAD2]"
                         >
                             <span className="flex items-center gap-3">
-                                <MdCalculate className="text-lg" />
+                                <MdCalculate className="shrink-0 text-lg" />
                                 Calculate Your BMI
                             </span>
-                            <MdArrowForward className="text-xl" />
+
+                            <MdArrowForward className="shrink-0 text-xl" />
                         </Link>
 
                         <Link
                             href="/dashboard/user/user-profile"
-                            className="flex items-center justify-between rounded-xl bg-[#E9EFEC] px-5 py-4 text-sm font-semibold text-[#16423C] transition hover:bg-[#C4DAD2]"
+                            className="flex items-center justify-between gap-4 rounded-xl bg-[#E9EFEC] px-5 py-4 text-sm font-semibold text-[#16423C] transition hover:bg-[#C4DAD2]"
                         >
                             <span className="flex items-center gap-3">
-                                <MdMonitorWeight className="text-lg" />
+                                <MdMonitorWeight className="shrink-0 text-lg" />
                                 Update Profile Details
                             </span>
-                            <MdArrowForward className="text-xl" />
+
+                            <MdArrowForward className="shrink-0 text-xl" />
                         </Link>
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 }

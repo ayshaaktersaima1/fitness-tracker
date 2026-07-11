@@ -4,7 +4,7 @@ import { HiArrowRight } from 'react-icons/hi2';
 
 const CTASection = () => {
     return (
-        <section className="bg-[#E9EFEC] py-16">
+        <section className="py-16">
             <div className="mx-auto w-[85%]">
                 <div
                     className="rounded-[28px] bg-[#16423C] bg-cover bg-center px-6 py-14 text-center shadow-lg md:px-10 lg:py-16"
