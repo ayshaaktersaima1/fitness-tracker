@@ -14,6 +14,7 @@ import {
 } from '@heroui/react';
 import { FaCalculator, FaChartLine, FaDumbbell } from 'react-icons/fa';
 import { authClient } from '@/lib/auth-client';
+import { toast } from 'react-toastify';
 
 const features = [
     { icon: <FaChartLine />, title: 'Track Progress' },
@@ -44,8 +45,8 @@ export default function RegisterPage() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        if (!fitnessGoal) return alert('Please select your fitness goal');
-        if (!activityLevel) return alert('Please select your activity level');
+        if (!fitnessGoal) return toast.info('Please select your fitness goal');
+        if (!activityLevel) return toast.info('Please select your activity level');
 
         const form = Object.fromEntries(new FormData(e.currentTarget));
 
@@ -67,11 +68,11 @@ export default function RegisterPage() {
         });
 
         if (error) {
-            alert(error.message);
+            toast.info(error.message);
             return;
         }
 
-        alert('Account created successfully!');
+        toast.success('Account created successfully!');
         router.push('/dashboard/user');
     };
 
@@ -222,8 +223,8 @@ export default function RegisterPage() {
                                             type="button"
                                             onClick={() => setFitnessGoal(goal.value)}
                                             className={`rounded-2xl border p-4 text-left transition ${fitnessGoal === goal.value
-                                                    ? 'border-[#16423C] bg-[#16423C] text-white'
-                                                    : 'border-[#C4DAD2] bg-[#E9EFEC] text-[#16423C] hover:bg-[#C4DAD2]'
+                                                ? 'border-[#16423C] bg-[#16423C] text-white'
+                                                : 'border-[#C4DAD2] bg-[#E9EFEC] text-[#16423C] hover:bg-[#C4DAD2]'
                                                 }`}
                                         >
                                             <p className="text-sm font-semibold">
@@ -232,8 +233,8 @@ export default function RegisterPage() {
 
                                             <p
                                                 className={`mt-1 text-xs leading-5 ${fitnessGoal === goal.value
-                                                        ? 'text-white/70'
-                                                        : 'text-[#6A9C89]'
+                                                    ? 'text-white/70'
+                                                    : 'text-[#6A9C89]'
                                                     }`}
                                             >
                                                 {goal.text}
@@ -255,8 +256,8 @@ export default function RegisterPage() {
                                             type="button"
                                             onClick={() => setActivityLevel(level.value)}
                                             className={`rounded-2xl border p-4 text-left transition ${activityLevel === level.value
-                                                    ? 'border-[#16423C] bg-[#16423C] text-white'
-                                                    : 'border-[#C4DAD2] bg-[#E9EFEC] text-[#16423C] hover:bg-[#C4DAD2]'
+                                                ? 'border-[#16423C] bg-[#16423C] text-white'
+                                                : 'border-[#C4DAD2] bg-[#E9EFEC] text-[#16423C] hover:bg-[#C4DAD2]'
                                                 }`}
                                         >
                                             <p className="text-sm font-semibold">
@@ -265,8 +266,8 @@ export default function RegisterPage() {
 
                                             <p
                                                 className={`mt-1 text-xs leading-5 ${activityLevel === level.value
-                                                        ? 'text-white/70'
-                                                        : 'text-[#6A9C89]'
+                                                    ? 'text-white/70'
+                                                    : 'text-[#6A9C89]'
                                                     }`}
                                             >
                                                 {level.text}

@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 
 const libre = Libre_Baskerville({
   subsets: ["latin"],
@@ -22,7 +23,12 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${libre.className}  h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <main>
+          {children}
+        </main>
+        <ToastContainer />
+      </body>
     </html>
   );
 }

@@ -13,6 +13,7 @@ import {
 } from '@heroui/react';
 import { FaCalculator, FaChartLine, FaDumbbell } from 'react-icons/fa';
 import { authClient } from '@/lib/auth-client';
+import { toast } from 'react-toastify';
 
 const features = [
     { icon: <FaChartLine />, title: 'Track Progress' },
@@ -42,7 +43,7 @@ export default function LoginPage() {
         setIsLoading(false);
 
         if (error) {
-            alert(error.message);
+            toast.error(error.message);
             return;
         }
 
